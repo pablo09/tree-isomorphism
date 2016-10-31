@@ -1,7 +1,7 @@
 package pl.pw.elka.gis.model;
 
 /**
- * Created by Pawel on 2016-10-30.
+ * Edge object
  */
 public class Edge {
     private Vertex from;
