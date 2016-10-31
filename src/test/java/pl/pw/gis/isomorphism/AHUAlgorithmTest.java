@@ -132,7 +132,7 @@ public class AHUAlgorithmTest {
      * V2 - V3 - V4                                V5
      *       |                                   /   \
      *      V5         after centering         V3     V1
-     *       |           =>                  /   \      \
+     *       |                               /   \      \
      *       V1                             V2    V4     V6
      *       |
      *       V6
@@ -161,13 +161,13 @@ public class AHUAlgorithmTest {
     }
 
     /**
-     * V1 - V2 - V3 - V4  =>    V2
+     * V1 - V2 - V3 - V4        V2
      *                         /  \
      *                        V1   V3
      *                               \
      *                               V4
      */
-    public RootedTree createTree4() {
+    private RootedTree createTree4() {
         Tree tree = new Tree();
 
         Vertex v1 = new Vertex(1);
@@ -188,13 +188,13 @@ public class AHUAlgorithmTest {
     }
 
     /**
-     * V1 - V2 - V3 - V4  =>    V3
+     * V1 - V2 - V3 - V4        V3
      *                         /  \
      *                        V2   V4
      *                       /
      *                      V1
      */
-    public RootedTree createTree5() {
+    private RootedTree createTree5() {
         Tree tree = new Tree();
 
         Vertex v1 = new Vertex(1);
