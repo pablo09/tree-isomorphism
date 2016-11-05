@@ -18,6 +18,7 @@ public class Tree {
     public Tree() {}
 
     public Tree(Tree tree) {
+        //TODO Add checking if tree having following vertices and edges can exist
         this.vertices = tree.getVertices().stream().map(v -> new Vertex(v.getId())).collect(Collectors.toSet());
         this.edges = tree.getEdges().stream().map(e -> new Edge(e.getFrom(), e.getTo())).collect(Collectors.toSet());
     }
@@ -87,7 +88,7 @@ public class Tree {
      * Tests whether a vertex is a tree leaf
      * @param tree Tree object
      * @param vertex Vertex object
-     * @return True/False: Vertex is a tree leaf/Vertex is not a tree leaf
+     * @return true if the vertex in the tree is a leaf, false otherwise
      */
     protected boolean isLeaf(Tree tree, Vertex vertex) {
         return tree.getEdges().stream().filter(e -> e.containsVertex(vertex)).count() == 1;

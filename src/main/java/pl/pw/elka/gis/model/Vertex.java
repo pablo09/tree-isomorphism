@@ -6,16 +6,6 @@ package pl.pw.elka.gis.model;
 public class Vertex {
     /** Vertex identifier */
     private int id;
-    /** Vertex parent */
-    private Vertex parent;
-
-    public Vertex getParent() {
-        return parent;
-    }
-
-    public void setParent(Vertex parent) {
-        this.parent = parent;
-    }
 
     public Vertex(int id) {
         this.id = id;
@@ -28,10 +18,6 @@ public class Vertex {
     public void setId(int id) {
         this.id = id;
     }
-
-    public boolean hasParent() {return parent != null;}
-
-    public boolean hasNoParent() {return parent == null;}
 
     @Override
     public String toString() {

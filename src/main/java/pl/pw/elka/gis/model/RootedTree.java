@@ -1,5 +1,7 @@
 package pl.pw.elka.gis.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -8,6 +10,8 @@ import java.util.stream.Collectors;
  */
 public class RootedTree extends Tree {
 
+    /** Map contains pair: (Vertex identifier, Vertex parent) */
+    private final Map<Integer, Vertex> parentMap = new HashMap<>();
     /** Tree root */
     private Vertex root;
 
@@ -24,10 +28,10 @@ public class RootedTree extends Tree {
     private void setParentVertices(Vertex localRoot) {
         Set<Vertex> children = getEdges().stream().filter(e -> e.containsVertex(localRoot)).map(e -> e.map(localRoot)).collect(Collectors.toSet());
         children = rewriteChildren(children);
-        if(children.stream().filter(Vertex::hasNoParent).count() == 0) return;
+        if(children.stream().filter(v -> !parentMap.containsKey(v.getId())).count() == 0) return;
 
-        Set<Vertex> childrenToAdd = children.stream().filter(v -> !v.equals(root)).filter(Vertex::hasNoParent).collect(Collectors.toSet());
-        getVertices().stream().filter(v -> childrenToAdd.contains(v)).forEach(v -> v.setParent(localRoot));
+        Set<Vertex> childrenToAdd = children.stream().filter(v -> !v.equals(root)).filter(v -> !parentMap.containsKey(v.getId())).collect(Collectors.toSet());
+        getVertices().stream().filter(v -> childrenToAdd.contains(v)).forEach(v -> parentMap.put(v.getId(), localRoot));
 
         childrenToAdd.stream().forEach(v -> setParentVertices(v));
     }
@@ -38,7 +42,7 @@ public class RootedTree extends Tree {
      * @return Set of root chlidren vertices
      */
     public Set<Vertex> getChildren(Vertex root) {
-        return getVertices().stream().filter(Vertex::hasParent).filter(v -> v.getParent().equals(root)).collect(Collectors.toSet());
+        return getVertices().stream().filter(v -> parentMap.containsKey(v.getId())).filter(v -> parentMap.get(v.getId()).equals(root)).collect(Collectors.toSet());
     }
 
     /**
