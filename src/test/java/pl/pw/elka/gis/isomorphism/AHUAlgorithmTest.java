@@ -1,8 +1,6 @@
-package pl.pw.gis.isomorphism;
+package pl.pw.elka.gis.isomorphism;
 
 import org.junit.jupiter.api.Test;
-import pl.pw.elka.gis.isomorphism.AHUAlgorithm;
-import pl.pw.elka.gis.isomorphism.IsomporhismAlgorithm;
 import pl.pw.elka.gis.model.Edge;
 import pl.pw.elka.gis.model.RootedTree;
 import pl.pw.elka.gis.model.Tree;

@@ -1,5 +1,8 @@
 package pl.pw.elka.gis.model;
 
+import pl.pw.elka.gis.validator.DFSTreeValidator;
+import pl.pw.elka.gis.validator.TreeValidator;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,18 +12,28 @@ import java.util.stream.Collectors;
  * Tree object
  */
 public class Tree {
+    /** Tree validator */
+    private final static TreeValidator treeValidator = new DFSTreeValidator();
     /** Set of tree's vertices */
     private Set<Vertex> vertices = new HashSet<>();
 
     /** Set of tre's edges */
     private Set<Edge> edges = new HashSet<>();
 
+    @Deprecated
     public Tree() {}
 
     public Tree(Tree tree) {
-        //TODO Add checking if tree having following vertices and edges can exist
         this.vertices = tree.getVertices().stream().map(v -> new Vertex(v.getId())).collect(Collectors.toSet());
         this.edges = tree.getEdges().stream().map(e -> new Edge(e.getFrom(), e.getTo())).collect(Collectors.toSet());
+        treeValidator.validate(vertices, edges);
+    }
+
+    public Tree(Set<Vertex> vertices, Set<Edge> edges) {
+        treeValidator.validate(vertices, edges);
+
+        this.vertices = vertices;
+        this.edges = edges;
     }
 
     public Set<Edge> getEdges() {
