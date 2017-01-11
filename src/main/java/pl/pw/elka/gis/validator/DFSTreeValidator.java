@@ -27,7 +27,10 @@ public class DFSTreeValidator implements TreeValidator {
      * @param visited  Set of visited vertices
      */
     private void validateConnectivity(Set<Vertex> vertices, Set<Vertex> visited) {
-        if((visited.size()) != vertices.size()) throw new IllegalArgumentException("Graph is not conntected " + visited.size() + " vs " + vertices.size());
+        if((visited.size()) != vertices.size()) {
+            System.out.println("Graph is not connected");
+            throw new IllegalArgumentException("Graph is not conntected ");
+        }
     }
 
     /**
@@ -46,6 +49,7 @@ public class DFSTreeValidator implements TreeValidator {
             if(!visited.contains(v)) {
                 performDFS(neighbours, v, vertex, visited);
             } else if(!v.equals(parent)) {
+                System.out.println("Cycle has been found");
                 throw new IllegalArgumentException("Cycle has been found");
             }
         }

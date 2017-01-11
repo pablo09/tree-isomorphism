@@ -6,6 +6,8 @@ import pl.pw.elka.gis.model.RootedTree;
 import pl.pw.elka.gis.model.Tree;
 import pl.pw.elka.gis.utils.TreeUtils;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -17,13 +19,45 @@ import java.util.stream.Collectors;
 public class TreeIsomorphismApplication {
 
     public static void main(String[] args) {
-        if(args.length != 2) {
-            System.out.println("Error: Incorrect arguments number. \nYou have to give me two arguments which would be two URI of tree describing files");
+        String files[] = new String[2];
+
+        if(args.length == 2) {
+            files[0] = args[0];
+            files[1] = args[1];
+        }
+        else if(args.length == 0) {
+            File f = new File("./");
+
+            if(Arrays.stream(f.list()).filter(file -> file.endsWith("txt")).count() != 2) {
+                System.out.println("Error: There should be only 2 txt files in JAR location when running application with no arguments");
+                return;
+            }
+
+            int i = 0;
+            for(String filename: f.list()) {
+                if(filename.endsWith("txt")) {
+                    files[i] = filename;
+                    i++;
+                }
+            }
+        } else  {
+            System.out.println("Error: Incorrect arguments number.\nYou have to put two .txt files in the same location as JAR or you have to give their names as arguments");
             return;
         }
 
-        Tree tree1 = TreeUtils.loadTreeFromFile(args[0]);
-        Tree tree2 = TreeUtils.loadTreeFromFile(args[1]);
+        Tree tree1 = null;
+        Tree tree2 = null;
+
+        try {
+            tree1 = TreeUtils.loadTreeFromSameDirectory(files[0]);
+            tree2 = TreeUtils.loadTreeFromSameDirectory(files[1]);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: Cannot create trees. Please verify your input files.");
+            return;
+        } catch(Exception ex) {
+            System.out.println("Error occured while trying to load trees from files");
+            return;
+        }
 
         if(!isTreeRooted(tree1) || !isTreeRooted(tree2)) {
             System.out.println("Error: Both trees must be rooted");
@@ -36,7 +70,7 @@ public class TreeIsomorphismApplication {
         Set<RootedTree> rooted2 = TreeUtils.convertTreeToRooted(tree2);
 
         if(rooted1.size() != rooted2.size()) {
-            System.out.println("Tree are not isomoprhic.\nReason: different number of roots");
+            System.out.println("Trees are not isomoprhic.\nReason: different number of roots");
         } else if(rooted1.size() == 1 && rooted2.size() == 1) {
             getResult(isomorphismAlgorithm, rooted1.stream().findFirst(), rooted2.stream().findFirst());
         } else {
