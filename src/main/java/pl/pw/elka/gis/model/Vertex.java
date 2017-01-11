@@ -38,4 +38,8 @@ public class Vertex {
     public int hashCode() {
         return id;
     }
+
+    public boolean isOneOf(Vertex v1, Vertex v2) {
+        return this.equals(v1) || this.equals(v2);
+    }
 }

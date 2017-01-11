@@ -6,7 +6,7 @@ import pl.pw.elka.gis.model.RootedTree;
  * Tests rooted tree isomorphism
  * Created by Pawel on 2016-10-30.
  */
-public interface IsomporhismAlgorithm {
+public interface IsomorphismAlgorithm {
 
     /**
      * Tests whether two rooted tress are isomorphic

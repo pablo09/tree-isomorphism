@@ -1,6 +1,6 @@
 package pl.pw.elka.gis.isomorphism;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import pl.pw.elka.gis.model.Edge;
 import pl.pw.elka.gis.model.RootedTree;
 import pl.pw.elka.gis.model.Tree;
@@ -8,8 +8,9 @@ import pl.pw.elka.gis.model.Vertex;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * Created by Pawel on 2016-10-31.
@@ -29,7 +30,7 @@ public class AHUAlgorithmTest {
         RootedTree rootedTree1 = createTree1();
         RootedTree rootedTree2 = createTree2();
 
-        IsomporhismAlgorithm ahu = new AHUAlgorithm();
+        IsomorphismAlgorithm ahu = new AHUAlgorithm();
         assertTrue(ahu.isIsomorphic(rootedTree1, rootedTree2));
     }
 
@@ -38,7 +39,7 @@ public class AHUAlgorithmTest {
         RootedTree rootedTree1 = createTree1();
         RootedTree rootedTree2 = createTree3();
 
-        IsomporhismAlgorithm ahu = new AHUAlgorithm();
+        IsomorphismAlgorithm ahu = new AHUAlgorithm();
         assertFalse(ahu.isIsomorphic(rootedTree1, rootedTree2));
     }
 
@@ -47,7 +48,7 @@ public class AHUAlgorithmTest {
         RootedTree rootedTree1 = createTree1();
         RootedTree rootedTree2 = createTree5();
 
-        IsomporhismAlgorithm ahu = new AHUAlgorithm();
+        IsomorphismAlgorithm ahu = new AHUAlgorithm();
         assertFalse(ahu.isIsomorphic(rootedTree1, rootedTree2));
     }
     /**
@@ -63,9 +64,10 @@ public class AHUAlgorithmTest {
         RootedTree rootedTree3 = createTree5();
         RootedTree rootedTree4 = createTree4();
 
-        IsomporhismAlgorithm ahu = new AHUAlgorithm();
+        IsomorphismAlgorithm ahu = new AHUAlgorithm();
         assertTrue(ahu.isIsomorphic(rootedTree1, rootedTree3) || ahu.isIsomorphic(rootedTree2, rootedTree3));
     }
+
 
     /**
      * V1 - V2 - V3 - V4 - V6

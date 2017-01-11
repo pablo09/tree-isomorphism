@@ -24,6 +24,16 @@ public class TreeValidatorTest {
         createTree2();
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionDueToGraphNotBeingTree3() {
+        createTree5();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionDueToGraphNotBeingTree4() {
+        createTree6();
+    }
+
     @Test
     public void shouldNotThrowExceptionDueToGraphNotBeingTree1() {
         createTree3();
@@ -33,6 +43,8 @@ public class TreeValidatorTest {
     public void shouldNotThrowExceptionDueToGraphNotBeingTree2() {
         createTree4();
     }
+
+
 
     private Tree createTree1() {
         Vertex v1 = new Vertex(1);
@@ -133,4 +145,97 @@ public class TreeValidatorTest {
 
         return new Tree(vertices, edges);
     }
+
+    private Tree createTree5() {
+        Vertex v1 = new Vertex(1);
+        Vertex v2 = new Vertex(2);
+        Vertex v3 = new Vertex(3);
+        Vertex v4 = new Vertex(4);
+
+
+        Set<Vertex> vertices = new HashSet<>();
+        Set<Edge> edges = new HashSet<>();
+
+        vertices.add(v1);
+        vertices.add(v2);
+        vertices.add(v3);
+        vertices.add(v4);
+
+        return new Tree(vertices, edges);
+    }
+
+    /**
+     * V1 - V2 - V3 - V4  V6
+     *           |
+     *           V5
+     */
+    private Tree createTree6() {
+        Vertex v1 = new Vertex(1);
+        Vertex v2 = new Vertex(2);
+        Vertex v3 = new Vertex(3);
+        Vertex v4 = new Vertex(4);
+        Vertex v5 = new Vertex(5);
+        Vertex v6 = new Vertex(6);
+
+        Edge e1 = new Edge(v1, v2);
+        Edge e2 = new Edge(v2, v3);
+        Edge e3 = new Edge(v3, v4);
+        Edge e4 = new Edge(v3, v5);
+        //Edge e5 = new Edge(v4, v6);
+
+        Set<Vertex> vertices = new HashSet<>();
+        Set<Edge> edges = new HashSet<>();
+
+        vertices.add(v1);
+        vertices.add(v2);
+        vertices.add(v3);
+        vertices.add(v4);
+        vertices.add(v5);
+        vertices.add(v6);
+
+        edges.add(e1);
+        edges.add(e2);
+        edges.add(e3);
+        edges.add(e4);
+
+        return new Tree(vertices, edges);
+    }
+
+    /**
+     * V1 - V2  V3 - V4 - V6
+     *           |
+     *           V5
+     */
+    private Tree createTree7() {
+        Vertex v1 = new Vertex(1);
+        Vertex v2 = new Vertex(2);
+        Vertex v3 = new Vertex(3);
+        Vertex v4 = new Vertex(4);
+        Vertex v5 = new Vertex(5);
+        Vertex v6 = new Vertex(6);
+
+        Edge e1 = new Edge(v1, v2);
+       // Edge e2 = new Edge(v2, v3);
+        Edge e3 = new Edge(v3, v4);
+        Edge e4 = new Edge(v3, v5);
+        Edge e5 = new Edge(v4, v6);
+
+        Set<Vertex> vertices = new HashSet<>();
+        Set<Edge> edges = new HashSet<>();
+
+        vertices.add(v1);
+        vertices.add(v2);
+        vertices.add(v3);
+        vertices.add(v4);
+        vertices.add(v5);
+        vertices.add(v6);
+
+        edges.add(e1);
+        edges.add(e5);
+        edges.add(e3);
+        edges.add(e4);
+
+        return new Tree(vertices, edges);
+    }
+
 }

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by Pawel on 2016-11-11.
+ * DFS based tree validator
  */
 public class DFSTreeValidator implements TreeValidator {
 
@@ -19,10 +19,29 @@ public class DFSTreeValidator implements TreeValidator {
         Set<Vertex> visited = new HashSet<>();
 
         performDFS(neighbours, vertices.stream().findAny().get(), null, visited);
+        validateConnectivity(vertices, visited);
+    }
+    /**
+     * Validates graph connectivity
+     * @param vertices Set of graph vertices
+     * @param visited  Set of visited vertices
+     */
+    private void validateConnectivity(Set<Vertex> vertices, Set<Vertex> visited) {
+        if((visited.size()) != vertices.size()) throw new IllegalArgumentException("Graph is not conntected " + visited.size() + " vs " + vertices.size());
     }
 
+    /**
+     * Performs DFS algorithm
+     * @param neighbours Neighbours map
+     * @param vertex Vertex that is being processed
+     * @param parent Parent vertex of @vertex
+     * @param visited Set of already visited vertices
+     */
     private void performDFS(Map<Vertex, Set<Vertex>> neighbours, Vertex vertex, Vertex parent, Set<Vertex> visited) {
-        visited.add(parent);
+        if(vertex != null) {
+            visited.add(vertex);
+        }
+
         for(Vertex v: neighbours.get(vertex)) {
             if(!visited.contains(v)) {
                 performDFS(neighbours, v, vertex, visited);
@@ -32,6 +51,12 @@ public class DFSTreeValidator implements TreeValidator {
         }
     }
 
+    /**
+     * Creates neighbours map
+     * @param vertices Set of tree vertices
+     * @param edges Set of tree edges
+     * @return Map of vertices and coressponding neighbour vertices
+     */
     private Map<Vertex, Set<Vertex>> createNeighboursMap(Set<Vertex> vertices, Set<Edge> edges) {
         Map<Vertex, Set<Vertex>> neighbours = new HashMap<>();
 
@@ -39,7 +64,7 @@ public class DFSTreeValidator implements TreeValidator {
             Set<Vertex> vertexNeighbours = new HashSet<>();
             edges.stream().forEach(e -> {
                      if(e.containsVertex(v)) {
-                         vertexNeighbours.add(e.map(v));
+                         vertexNeighbours.add(e.getTheOtherVertex(v));
                      }
             });
             neighbours.put(v, vertexNeighbours);

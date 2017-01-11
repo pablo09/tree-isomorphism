@@ -23,35 +23,47 @@ public class RootedTree extends Tree {
 
     /**
      * Sets children-parent relationship inside a tree to make it act as a rooted tree
-     * @param localRoot
+     * We start from the root and then go recursively deeper and deeper
+     * @param localRoot Current root vertex
      */
     private void setParentVertices(Vertex localRoot) {
-        Set<Vertex> children = getEdges().stream().filter(e -> e.containsVertex(localRoot)).map(e -> e.map(localRoot)).collect(Collectors.toSet());
-        children = rewriteChildren(children);
-        if(children.stream().filter(v -> !parentMap.containsKey(v.getId())).count() == 0) return;
+        Set<Vertex> neighbours = findNeighbours(localRoot);
+        if(neighbours.stream().filter(v -> !parentMap.containsKey(v.getId())).count() == 0) return;
 
-        Set<Vertex> childrenToAdd = children.stream().filter(v -> !v.equals(root)).filter(v -> !parentMap.containsKey(v.getId())).collect(Collectors.toSet());
-        getVertices().stream().filter(v -> childrenToAdd.contains(v)).forEach(v -> parentMap.put(v.getId(), localRoot));
+        Set<Vertex> childrenToAdd = findChildren(localRoot, neighbours);
 
         childrenToAdd.stream().forEach(v -> setParentVertices(v));
     }
 
     /**
-     * Finds a vertex (direct) children
-     * @param root Vertex object
-     * @return Set of root chlidren vertices
+     * Finds local root's children
+     * This method MUST be called recursively starting from tree root and then going deeper by recursion.
+     * @param localRoot Local root
+     * @param neighbours Set of local root neighbours
+     * @return Set of local root's children
      */
-    public Set<Vertex> getChildren(Vertex root) {
-        return getVertices().stream().filter(v -> parentMap.containsKey(v.getId())).filter(v -> parentMap.get(v.getId()).equals(root)).collect(Collectors.toSet());
+    private Set<Vertex> findChildren(Vertex localRoot, Set<Vertex> neighbours) {
+        Set<Vertex> childrenToAdd = neighbours.stream().filter(v -> !v.equals(root)).filter(v -> !parentMap.containsKey(v.getId())).collect(Collectors.toSet());
+        getVertices().stream().filter(v -> childrenToAdd.contains(v)).forEach(v -> parentMap.put(v.getId(), localRoot));
+        return childrenToAdd;
     }
 
     /**
-     * Replaces set of vertices with tree vertices to keep track of objects reference
-     * @param children Set of vertices
+     * Finds vertex's neighbours
+     * @param vertex Vertex for which we look for neighbours
      * @return
      */
-    private Set<Vertex> rewriteChildren(Set<Vertex> children) {
-        return getVertices().stream().filter(v -> children.contains(v)).collect(Collectors.toSet());
+    private Set<Vertex> findNeighbours(Vertex vertex) {
+        return getEdges().stream().filter(e -> e.containsVertex(vertex)).map(e -> e.getTheOtherVertex(vertex)).collect(Collectors.toSet());
+    }
+
+    /**
+     * Finds a vertex's (direct) children
+     * @param root Vertex object
+     * @return Set of vertex's children
+     */
+    public Set<Vertex> getChildren(Vertex root) {
+        return getVertices().stream().filter(v -> parentMap.containsKey(v.getId())).filter(v -> parentMap.get(v.getId()).equals(root)).collect(Collectors.toSet());
     }
 
     public Vertex getRoot() {

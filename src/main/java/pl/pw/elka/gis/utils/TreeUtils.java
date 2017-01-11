@@ -1,6 +1,7 @@
 package pl.pw.elka.gis.utils;
 
 import pl.pw.elka.gis.model.Edge;
+import pl.pw.elka.gis.model.RootedTree;
 import pl.pw.elka.gis.model.Tree;
 import pl.pw.elka.gis.model.Vertex;
 import pl.pw.elka.gis.validator.DFSTreeValidator;
@@ -14,12 +15,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by Pawel on 2016-11-11.
+ * Utility methods to help working with trees
  */
 public class TreeUtils {
 
     private static final TreeValidator treeValidator = new DFSTreeValidator();
 
+    private TreeUtils() {}
+
+    /**
+     * Builds tree object based on specfic file
+     * @param path Path to file describing tree
+     * @return Tree instance
+     */
     public static Tree loadTreeFromFile(String path) {
         Map<Integer, Set<Integer>> neighbours = createNeighbours(path);
 
@@ -36,6 +44,22 @@ public class TreeUtils {
         return new Tree(vertices, edges);
     }
 
+    public static Set<RootedTree> convertTreeToRooted(Tree tree) {
+        Set<Vertex> roots = tree.centerTree();
+        Set<RootedTree> trees = new HashSet<>();
+        roots.stream().forEach(root -> {
+            RootedTree rootedTree = new RootedTree(tree, root);
+            trees.add(rootedTree);
+        });
+
+        return trees;
+    }
+
+    /**
+     * Creates neighbours map
+     * @param path Path to file describing tree
+     * @return Map of vertices and their neighbours
+     */
     private static Map<Integer, Set<Integer>> createNeighbours(String path)  {
         List<String> lines = fileToListLines("trees/" + path);
         Map<Integer, Set<Integer>> neighbours = new HashMap<>();
@@ -56,6 +80,11 @@ public class TreeUtils {
         return neighbours;
     }
 
+    /**
+     * Converts file describing tree to list of strings
+     * @param path Path to file describing tree
+     * @return List of string containing information about tree
+     */
     private static List<String> fileToListLines(String path) {
         List<String> lines = new ArrayList<>();
 

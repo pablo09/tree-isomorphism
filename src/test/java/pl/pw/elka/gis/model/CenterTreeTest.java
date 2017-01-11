@@ -1,11 +1,12 @@
 package pl.pw.elka.gis.model;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Pawel on 2016-10-30.

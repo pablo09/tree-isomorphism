@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  *
  * @see <a href="http://logic.pdmi.ras.ru/~smal/files/smal_jass08.pdf">http://logic.pdmi.ras.ru/~smal/files/smal_jass08.pdf</a>
  */
-public class AHUAlgorithm implements IsomporhismAlgorithm {
+public class AHUAlgorithm implements IsomorphismAlgorithm {
 
     public boolean isIsomorphic(RootedTree t1, RootedTree t2) {
         String root1 = performAHU(t1);

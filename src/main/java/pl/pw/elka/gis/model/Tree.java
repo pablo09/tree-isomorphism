@@ -82,6 +82,7 @@ public class Tree {
         leaves.stream().forEach(vertex -> {
             edgesToRemove.addAll(tree.edges.stream().filter(e -> e.containsVertex(vertex)).collect(Collectors.toSet()));
         });
+
         tree.edges.removeAll(edgesToRemove);
         tree.vertices.removeAll(leaves);
 
