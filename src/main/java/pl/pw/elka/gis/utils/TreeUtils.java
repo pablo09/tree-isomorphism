@@ -111,6 +111,10 @@ public class TreeUtils {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
             while((line = reader.readLine()) != null) {
+                if(!line.matches("[01\\s]+")) {
+                    System.out.println("Error: There are some forbidden characters in tree file.\nOnly 0 and 1 are allowed.");
+                    throw new UnknownFormatConversionException("Tree file contains unknwon characters");
+                }
                 lines.add(line);
             }
         } catch (IOException e) {

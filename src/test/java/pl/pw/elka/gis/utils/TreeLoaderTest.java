@@ -2,6 +2,8 @@ package pl.pw.elka.gis.utils;
 
 import org.junit.Test;
 
+import java.util.UnknownFormatConversionException;
+
 /**
  * Created by Pawel on 2016-11-11.
  */
@@ -25,5 +27,15 @@ public class TreeLoaderTest {
     @Test(expected = IllegalArgumentException.class)
     public void shoudlThrowExceptionDueToGraphNotBeingTree2() {
         TreeUtils.loadTreeFromFile("cyclic2.txt");
+    }
+
+    @Test(expected = UnknownFormatConversionException.class)
+    public void shoulThrowExceptionDueToBrokenFile() {
+        TreeUtils.loadTreeFromFile("broken1.txt");
+    }
+
+    @Test(expected = UnknownFormatConversionException.class)
+    public void shoulThrowExceptionDueToBrokenFile2() {
+        TreeUtils.loadTreeFromFile("broken2.txt");
     }
 }
