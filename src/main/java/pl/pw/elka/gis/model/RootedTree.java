@@ -14,10 +14,15 @@ public class RootedTree extends Tree {
     private final Map<Integer, Vertex> parentMap = new HashMap<>();
     /** Tree root */
     private Vertex root;
-
+    /**
+     * Creates Rooted Tree
+     * @param tree Tree
+     * @param root Vertex representing root of the Tree
+     * */
     public RootedTree(Tree tree, Vertex root) {
         super(tree);
         this.root = new Vertex(root.getId());
+        /** Creates relationship between Vertices*/
         setParentVertices(this.root);
     }
 
@@ -27,11 +32,13 @@ public class RootedTree extends Tree {
      * @param localRoot Current root vertex
      */
     private void setParentVertices(Vertex localRoot) {
+        /** Set of neighbours based on local root*/
         Set<Vertex> neighbours = findNeighbours(localRoot);
+        /** Checks neighbours id*/
         if(neighbours.stream().filter(v -> !parentMap.containsKey(v.getId())).count() == 0) return;
-
+        /** Set of localRoot children Vertexes*/
         Set<Vertex> childrenToAdd = findChildren(localRoot, neighbours);
-
+        /** Sets parent relations with children Vertexes*/
         childrenToAdd.stream().forEach(v -> setParentVertices(v));
     }
 
