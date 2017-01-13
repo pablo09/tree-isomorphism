@@ -20,22 +20,27 @@ public class TreeLoaderTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shoudlThrowExceptionDueToGraphNotBeingTree() {
+    public void shouldThrowExceptionDueToGraphNotBeingTree() {
         TreeUtils.loadTreeFromFile("cyclic1.txt");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shoudlThrowExceptionDueToGraphNotBeingTree2() {
+    public void shouldThrowExceptionDueToGraphNotBeingTree2() {
         TreeUtils.loadTreeFromFile("cyclic2.txt");
     }
 
     @Test(expected = UnknownFormatConversionException.class)
-    public void shoulThrowExceptionDueToBrokenFile() {
+    public void shouldhrowExceptionDueToBrokenFile() {
         TreeUtils.loadTreeFromFile("broken1.txt");
     }
 
     @Test(expected = UnknownFormatConversionException.class)
-    public void shoulThrowExceptionDueToBrokenFile2() {
+    public void shouldhrowExceptionDueToBrokenFile2() {
         TreeUtils.loadTreeFromFile("broken2.txt");
+    }
+
+    @Test(expected = UnknownFormatConversionException.class)
+    public void shouldhrowExceptionDueToBrokenFile3() {
+        TreeUtils.loadTreeFromFile("broken3.txt");
     }
 }

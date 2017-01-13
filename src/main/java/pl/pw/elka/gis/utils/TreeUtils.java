@@ -80,11 +80,14 @@ public class TreeUtils {
      * @return Map of vertices and their neighbours
      */
     private static Map<Integer, Set<Integer>> createNeighbours(String path, boolean isForTests)  {
-        List<String> lines = isForTests ? testFileToListLines("trees/" + path) : fileToListLines("./" + path);
+        List<String> lines = getLines(path, isForTests);
         Map<Integer, Set<Integer>> neighbours = new HashMap<>();
 
         for (int i = 0; i < lines.size(); i++) {
             List<Integer> matrixNeighbours = Arrays.stream(lines.get(i).split(" ")).map(s -> Integer.valueOf(s)).collect(Collectors.toList());
+            if(!hasEveryLineCorrectNumbersOfCharacters(lines, matrixNeighbours)) {
+                 throw new UnknownFormatConversionException("Every line of line has to contain equal number of elements and equal to number of rows in file");
+            }
             Set<Integer> vertexNeighbours = new HashSet<>();
 
             for (int j = 0; j < matrixNeighbours.size(); j++) {
@@ -104,10 +107,11 @@ public class TreeUtils {
      * @param path Path to file describing tree
      * @return List of string containing information about tree
      */
-    private static List<String> testFileToListLines(String path) {
+    private static List<String> getLines(String path, boolean isForTests) {
+        String finalPath = isForTests ? ("trees/" + path) : ("./" + path);
         List<String> lines = new ArrayList<>();
 
-        try (InputStream is = TreeUtils.class.getClassLoader().getResourceAsStream(path)) {
+        try (InputStream is = (isForTests ? getTestFilesInputStream(finalPath) : getRealFilesInputStream(finalPath))) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
             while((line = reader.readLine()) != null) {
@@ -126,29 +130,37 @@ public class TreeUtils {
     }
 
     /**
-     * Converts file describing tree to list of strings
-     * @param path Path to file describing tree
-     * @return List of string containing information about tree
+     * Checks if line of tree file has correct number of elements
+     * @param lines Lines of tree file
+     * @param matrixNeighbours List of 0 and 1 elements which describes if given ndoe is a neibgour of n-th vertex
+     * @return True/False: Correct number of elements/Incorrect number of elements
      */
-    private static List<String> fileToListLines(String path) {
-        List<String> lines = new ArrayList<>();
+    private static boolean hasEveryLineCorrectNumbersOfCharacters(List<String> lines, List<Integer> matrixNeighbours) {
+       if(lines.size() != matrixNeighbours.size()) {
+           return false;
+       }
 
-        try (InputStream is = new FileInputStream(path)) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            String line;
-            while((line = reader.readLine()) != null) {
-                lines.add(line);
-            }
-        } catch (IOException e) {
-            System.out.println("Error occured while opening file " + path);
-            throw new RuntimeException(e);
-        }
-
-        return lines;
+       return true;
     }
 
 
+    /**
+     * Returns input stream of resources
+     * @param path Path to resources
+     * @return Input stream of resource
+     */
+    private static InputStream getTestFilesInputStream(String path) {
+        return TreeUtils.class.getClassLoader().getResourceAsStream(path);
+    }
 
-
+    /**
+     * Returns file input stream
+     * @param path Path to file
+     * @return File input stream
+     * @throws FileNotFoundException Thrown when cannot find file at given path
+     */
+    private static InputStream getRealFilesInputStream(String path) throws FileNotFoundException{
+        return new FileInputStream(path);
+    }
 
 }
