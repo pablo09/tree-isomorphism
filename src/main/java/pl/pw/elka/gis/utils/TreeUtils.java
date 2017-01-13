@@ -86,7 +86,7 @@ public class TreeUtils {
         for (int i = 0; i < lines.size(); i++) {
             List<Integer> matrixNeighbours = Arrays.stream(lines.get(i).split(" ")).map(s -> Integer.valueOf(s)).collect(Collectors.toList());
             if(!hasEveryLineCorrectNumbersOfCharacters(lines, matrixNeighbours)) {
-                 throw new UnknownFormatConversionException("Every line of line has to contain equal number of elements and equal to number of rows in file");
+                 throw new UnknownFormatConversionException("Every line has to contain equal number of elements which equals number of rows in file");
             }
             Set<Integer> vertexNeighbours = new HashSet<>();
 
