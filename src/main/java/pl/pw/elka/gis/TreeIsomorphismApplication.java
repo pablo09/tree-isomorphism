@@ -76,9 +76,12 @@ public class TreeIsomorphismApplication {
         } else {
             List<RootedTree> rootedList1 = rooted1.stream().collect(Collectors.toList());
             List<RootedTree> rootedList2 = rooted2.stream().collect(Collectors.toList());
+			long start = System.currentTimeMillis();
 
             if(isomorphismAlgorithm.isIsomorphic(rootedList1.get(0), rootedList2.get(0))) {
+				long end = System.currentTimeMillis() ;
                 System.out.println("Trees are isomorphic");
+				System.out.println("Total time: " + (end - start) + " ms");
             } else {
                 getResult(isomorphismAlgorithm, rootedList1.get(1), rootedList2.get(0));
             }
@@ -97,11 +100,16 @@ public class TreeIsomorphismApplication {
     }
 
     private static void getResult(IsomorphismAlgorithm isomorphismAlgorithm, RootedTree t1, RootedTree t2) {
-        if(isomorphismAlgorithm.isIsomorphic(t1, t2)) {
+        long start = System.currentTimeMillis();
+
+		if(isomorphismAlgorithm.isIsomorphic(t1, t2)) {
             System.out.println("Trees are isomorphic");
         } else {
             System.out.println("Tree are not isomorphic");
         }
+		
+		long end = System.currentTimeMillis();
+		System.out.println("Total time: " + (end - start) + " ms");
 
         return;
     }
