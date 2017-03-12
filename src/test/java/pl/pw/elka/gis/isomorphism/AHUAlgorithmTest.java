@@ -17,13 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class AHUAlgorithmTest {
 
-    @Test
-    public void sameTreeShouldBeIsomorphicToItself() {
-        RootedTree rootedTree = createTree1();
-        AHUAlgorithm ahu = new AHUAlgorithm();
-
-        assertTrue(ahu.isIsomorphic(rootedTree, rootedTree));
-    }
+    
 
     @Test
     public void treesShouldBeIsomorphic() {
@@ -31,7 +25,23 @@ public class AHUAlgorithmTest {
         RootedTree rootedTree2 = createTree2();
 
         IsomorphismAlgorithm ahu = new AHUAlgorithm();
-        assertTrue(ahu.isIsomorphic(rootedTree1, rootedTree2));
+				 long start = System.currentTimeMillis();
+		boolean isIsomorphic = ahu.isIsomorphic(rootedTree1, rootedTree2);
+				 long end = System.currentTimeMillis();
+		 System.out.println("Time2: " + (end - start));
+
+        assertTrue(isIsomorphic);
+    }
+	
+	@Test
+    public void sameTreeShouldBeIsomorphicToItself() {
+        RootedTree rootedTree = createTree1();
+        AHUAlgorithm ahu = new AHUAlgorithm();
+		 long start = System.currentTimeMillis();
+		boolean isIsomorphic = ahu.isIsomorphic(rootedTree, rootedTree);
+		 long end = System.currentTimeMillis();
+		 System.out.println("Time1: " + (end - start));
+        assertTrue(isIsomorphic);
     }
 
     @Test
@@ -40,7 +50,14 @@ public class AHUAlgorithmTest {
         RootedTree rootedTree2 = createTree3();
 
         IsomorphismAlgorithm ahu = new AHUAlgorithm();
-        assertFalse(ahu.isIsomorphic(rootedTree1, rootedTree2));
+						 long start = System.currentTimeMillis();
+
+				boolean isIsomorphic = ahu.isIsomorphic(rootedTree1, rootedTree2);
+								 long end = System.currentTimeMillis();
+
+		 System.out.println("Time3: " + (end - start));
+
+        assertFalse(isIsomorphic);
     }
 
     @Test
@@ -48,8 +65,16 @@ public class AHUAlgorithmTest {
         RootedTree rootedTree1 = createTree1();
         RootedTree rootedTree2 = createTree5();
 
-        IsomorphismAlgorithm ahu = new AHUAlgorithm();
-        assertFalse(ahu.isIsomorphic(rootedTree1, rootedTree2));
+         IsomorphismAlgorithm ahu = new AHUAlgorithm();
+						 long start = System.currentTimeMillis();
+
+				boolean isIsomorphic = ahu.isIsomorphic(rootedTree1, rootedTree2);
+								 long end = System.currentTimeMillis();
+
+		 System.out.println("Time4: " + (end - start));
+
+        assertFalse(isIsomorphic);
+    
     }
     /**
      * We comparing V1 - V2 - V3 - V4 (*) vs V1 - V2 - V3 - V4 (**)
@@ -65,7 +90,14 @@ public class AHUAlgorithmTest {
         RootedTree rootedTree4 = createTree4();
 
         IsomorphismAlgorithm ahu = new AHUAlgorithm();
-        assertTrue(ahu.isIsomorphic(rootedTree1, rootedTree3) || ahu.isIsomorphic(rootedTree2, rootedTree3));
+								 long start = System.currentTimeMillis();
+
+		boolean isIsomorphic1 = ahu.isIsomorphic(rootedTree1, rootedTree3) ;
+		boolean isIsomorphic2 = ahu.isIsomorphic(rootedTree2, rootedTree3);
+										 long end = System.currentTimeMillis();
+		 System.out.println("Time5: " + (end - start));
+
+        assertTrue(isIsomorphic1 || isIsomorphic2);
     }
 
 

@@ -41,7 +41,12 @@ public class RootedTreeTest {
         Set<Vertex> root = tree.centerTree();
 
         RootedTree rootedTree = new RootedTree(tree, root.stream().findFirst().orElseThrow(RuntimeException::new));
+						 long start = System.currentTimeMillis();
+
         Set<Vertex> directChildren = rootedTree.getChildren(v3);
+						 long end = System.currentTimeMillis();
+				 System.out.println("Time1: " + (end - start));
+
         assertEquals(directChildren.size(), 3);
         assertTrue(directChildren.contains(v2));
         assertTrue(directChildren.contains(v5));

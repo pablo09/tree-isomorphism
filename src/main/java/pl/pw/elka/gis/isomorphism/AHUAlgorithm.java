@@ -61,16 +61,34 @@ public class AHUAlgorithm implements IsomorphismAlgorithm {
         if (tree.getChildren(v).isEmpty()) {
             tuples.put(v, "10");
         } else {
-            tree.getChildren(v).stream().forEach(v1 -> assignCanonicalNames(tree, v1, tuples));
+           // tree.getChildren(v).stream().forEach(v1 -> assignCanonicalNames(tree, v1, tuples));
+		   for(Vertex v1: tree.getChildren(v)) {
+			   assignCanonicalNames(tree, v1, tuples);
+		   }
         }
 
         String finalName = "1%s0";
         StringBuilder sb = new StringBuilder("");
-        tree.getChildren(v).stream().forEach(v1 -> {
-            sb.append(String.format(" %s ", tuples.get(v1).replaceAll("\\s+", "")));
-        });
+		StringBuilder sb1 = new StringBuilder("");
+        StringBuilder sb2 = new StringBuilder("");
 
-        tuples.put(v, String.format(finalName, sb.toString()));
+       // tree.getChildren(v).stream().forEach(v1 -> {
+        //    sb.append(String.format(" %s ", tuples.get(v1).replaceAll("\\s+", "")));
+        //});
+
+		int i = 0;
+		for(Vertex v1: tree.getChildren(v)) {
+			i++;
+			if(i < 4000) {
+				sb.append(String.format(" %s ", tuples.get(v1).replaceAll("\\s+", "")));
+			} else if(i >= 4000 && i < 8000){
+				sb1.append(String.format(" %s ", tuples.get(v1).replaceAll("\\s+", "")));
+			} else {
+				sb2.append(String.format(" %s ", tuples.get(v1).replaceAll("\\s+", "")));
+			}
+		}
+		
+        tuples.put(v, String.format(finalName, sb.toString() + sb1.toString() + sb2.toString()));
     }
 
     /**

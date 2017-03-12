@@ -39,7 +39,10 @@ public class RootedTree extends Tree {
         /** Set of localRoot children Vertexes*/
         Set<Vertex> childrenToAdd = findChildren(localRoot, neighbours);
         /** Sets parent relations with children Vertexes*/
-        childrenToAdd.stream().forEach(v -> setParentVertices(v));
+        //childrenToAdd.stream().forEach(v -> setParentVertices(v));
+		for(Vertex v: childrenToAdd) {
+			setParentVertices(v);
+		}
     }
 
     /**

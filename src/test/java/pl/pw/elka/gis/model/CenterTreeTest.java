@@ -31,8 +31,10 @@ public class CenterTreeTest {
 
         tree.setVertices(v1, v2, v3, v4);
         tree.setEdges(e1, e2, e3);
-
+				 long start = System.currentTimeMillis();
         Set<Vertex> root = tree.centerTree();
+				 long end = System.currentTimeMillis();
+			 System.out.println("Time1: " + (end - start));
 
         assertEquals(root.size(), 2);
         assertTrue(root.contains(v2));
@@ -61,7 +63,10 @@ public class CenterTreeTest {
         tree.setVertices(v1, v2, v3, v4, v5);
         tree.setEdges(e1, e2, e3, e4);
 
+         long start = System.currentTimeMillis();
         Set<Vertex> root = tree.centerTree();
+				 long end = System.currentTimeMillis();
+		 System.out.println("Time2: " + (end - start));
 
         assertEquals(root.size(), 1);
         assertTrue(root.contains(v2));
@@ -92,7 +97,10 @@ public class CenterTreeTest {
         tree.setVertices(v1, v2, v3, v4, v5, v6);
         tree.setEdges(e1, e2, e3, e4, e5);
 
+         long start = System.currentTimeMillis();
         Set<Vertex> root = tree.centerTree();
+				 long end = System.currentTimeMillis();
+		 System.out.println("Time3: " + (end - start));
 
         assertEquals(root.size(), 1);
         assertTrue(root.contains(v3));
@@ -134,7 +142,10 @@ public class CenterTreeTest {
         tree.setVertices(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10);
         tree.setEdges(e1, e2, e3, e4, e5, e6, e7, e8, e9);
 
+        long start = System.currentTimeMillis();
         Set<Vertex> root = tree.centerTree();
+				 long end = System.currentTimeMillis();
+		 System.out.println("Time4: " + (end - start));
 
         assertEquals(root.size(), 1);
         assertTrue(root.contains(v3));
